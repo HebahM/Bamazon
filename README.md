@@ -9,6 +9,8 @@ There is also a manager view, in which the user can view all products, view prod
 
 See below to see how the app works and the database before and after the changes were made.
 
+[Video](https://youtu.be/2ZQF9tcuU_E)
+
 [Database before](Demo/database_before.png)
 [Gif 1](Demo/demo1.gif)
 [Gif 2](Demo/demo2.gif)
