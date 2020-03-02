@@ -67,7 +67,7 @@ function purchaseProduct() {
           stock -= quantity;
           // console.log("New stock: " + stock)
           updateStock(stock, answer.productID);
-          console.log("Your total is $" + (quantity * res[0].price))
+          console.log("Your total is $" + parseFloat(quantity * res[0].price))
         }
       });
     });

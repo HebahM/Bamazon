@@ -141,7 +141,7 @@ function addProduct() {
     ]).then(function(answer){
         var newProduct = answer.newProduct;
         var newDept = answer.newDepartment;
-        var newPrice = parseInt(answer.newPrice);
+        var newPrice = parseFloat(answer.newPrice);
         var newInvent = parseInt(answer.newStock);
         connection.query("INSERT INTO products SET ?", {
             product_name: newProduct,
@@ -155,7 +155,6 @@ function addProduct() {
         })
         
     })
-    // connection.end();
 }
 
 
