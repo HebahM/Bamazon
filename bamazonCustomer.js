@@ -14,13 +14,13 @@ var connection = mysql.createConnection({
 
 function readProducts() {
   console.log("Selecting all products...\n");
-  connection.query("SELECT * FROM products", function (err, res) {
+  connection.query("SELECT item_id, product_name, price FROM products", function (err, res) {
     if (err) throw err;
     // Log all results of the SELECT statement
-    for (var i = 0; i < res.length; i++) {
-      console.log(res[i].item_id + " " + res[i].product_name + " " + res[i].price)
-    }
-    //   console.log(res);
+    // for (var i = 0; i < res.length; i++) {
+    //   console.log(res[i].item_id + " " + res[i].product_name + " " + res[i].price)
+    // }
+      console.table(res);
     purchaseProduct();
   });
 }
@@ -66,21 +66,21 @@ function purchaseProduct() {
         } else {
           stock -= quantity;
           // console.log("New stock: " + stock)
-          updateStock(stock, quantity);
+          updateStock(stock, answer.productID);
           console.log("Your total is $" + (quantity * res[0].price))
         }
       });
     });
 }
 
-function updateStock(stock, quantity) {
+function updateStock(stock, productID) {
   connection.query(
-    "UPDATE products SET ? WHERE ?", [{ stock_quantity: stock }, { item_id: quantity }], function (err, res) {
+    "UPDATE products SET ? WHERE ?", [{ stock_quantity: stock }, { item_id: productID }], function (err, res) {
       if (err) throw err;
-      // console.log(res.affectedRows + " products updated!\n");
+      console.log(res.affectedRows + " products updated!\n");
     })
   connection.end();
 }
 
-
+// console.table
 // cli-table
