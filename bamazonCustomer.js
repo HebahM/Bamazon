@@ -20,7 +20,7 @@ function readProducts() {
     // for (var i = 0; i < res.length; i++) {
     //   console.log(res[i].item_id + " " + res[i].product_name + " " + res[i].price)
     // }
-      console.table(res);
+    console.table(res);
     purchaseProduct();
   });
 }
@@ -55,7 +55,8 @@ function purchaseProduct() {
     .then(function (answer) {
       var quantity = parseInt(answer.quantity);
       var query = "SELECT product_name, item_id, stock_quantity, price FROM products WHERE ?";
-      connection.query(query, { item_id: answer.productID }, function (err, res) {
+      var productToBuy = answer.productID;
+      connection.query(query, { item_id: productToBuy }, function (err, res) {
         if (err) throw err;
         var stock = res[0].stock_quantity
         // console.log(res[0])
@@ -67,20 +68,39 @@ function purchaseProduct() {
           stock -= quantity;
           // console.log("New stock: " + stock)
           updateStock(stock, answer.productID);
-          console.log("Your total is $" + parseFloat(quantity * res[0].price))
+          var totalSale = parseFloat(quantity * res[0].price)
+          console.log("Your total is $" + totalSale)
+          updateProductSales(productToBuy, totalSale);
         }
       });
     });
+
 }
 
 function updateStock(stock, productID) {
   connection.query(
     "UPDATE products SET ? WHERE ?", [{ stock_quantity: stock }, { item_id: productID }], function (err, res) {
       if (err) throw err;
-      console.log(res.affectedRows + " products updated!\n");
+      // console.log(res.affectedRows + " products updated!\n");
     })
-  connection.end();
 }
 
+function updateProductSales(productToBuy, totalSale) {
+  connection.query("SELECT product_sales FROM products WHERE ?", { item_id: productToBuy }, function (err, res) {
+    if (err) throw err;
+    var sales = res[0].product_sales;
+    sales += totalSale;
+
+    connection.query(
+      "UPDATE products SET ? WHERE ?", [{ product_sales: sales }, { item_id: productToBuy }], function (err, res) {
+        if (err) throw err;
+
+        console.log(res.affectedRows + " products updated!\n");
+          connection.end();
+
+      })
+  })
+
+}
 // console.table
 // cli-table

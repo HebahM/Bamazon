@@ -6,6 +6,8 @@ There is a customer view, in which the user can view and purchase products.
 
 There is also a manager view, in which the user can view all products, view products with low inventory, update inventory, and add new products.
 
+The third option is the supervisor view. This provides two options: view product sales by department or create new department. When viewing product sales, the user can see the total sales for all products within each department, as well as overhead and profits.
+
 
 See below to see how the app works and the database before and after the changes were made.
 
@@ -27,6 +29,9 @@ See below to see how the app works and the database before and after the changes
 
 
 [Gif 5](Demo/demo5.gif)
+
+
+[Gif 6](Demo/demo6.gif)
 
 
 [Database after](Demo/database_after.png)
